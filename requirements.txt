@@ -1,0 +1,2 @@
+fastchat
+vllm >= 0.4.3
