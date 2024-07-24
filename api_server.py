@@ -263,9 +263,10 @@ async def create_chat_completion(request: ChatCompletionRequest,
     #logger.info(f"Received chat completion request: {request}")
     print(f"Received chat completion request: {request}")
 
-    error_check_ret = await check_model(request)
-    if error_check_ret is not None:
-        return error_check_ret
+    #注释model名校验，因为目前只有一个模型
+    #error_check_ret = await check_model(request)
+    #if error_check_ret is not None:
+    #    return error_check_ret
 
     if request.logit_bias is not None and len(request.logit_bias) > 0:
         # TODO: support logit_bias in vLLM engine.
@@ -277,7 +278,9 @@ async def create_chat_completion(request: ChatCompletionRequest,
     if error_check_ret is not None:
         return error_check_ret
 
-    model_name = request.model
+    #让所有的model name都可以访问
+    #model_name = request.model
+    model_name = served_model
     request_id = f"cmpl-{random_uuid()}"
     created_time = int(time.monotonic())
     try:
